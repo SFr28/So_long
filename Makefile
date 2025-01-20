@@ -6,46 +6,58 @@
 #    By: sfraslin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 14:45:58 by sfraslin          #+#    #+#              #
-#    Updated: 2024/12/13 18:41:08 by sfraslin         ###   ########.fr        #
+#    Updated: 2025/01/09 12:08:08 by sfraslin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
+NAME_BONUS = so_long_bonus
 
-SRCS = ./srcs/test.c ./srcs/ft_map_check.c
+SRCS = ./srcs/start.c ./srcs/ft_map_check.c ./srcs/create.c ./srcs/move.c ./srcs/message.c ./srcs/utils.c
+SRCS_BONUS = ./bonus/start_bonus.c ./bonus/ft_map_check_bonus.c ./bonus/create_bonus.c ./bonus/move_bonus.c \
+		./bonus/message_bonus.c ./bonus/utils_bonus.c
 OBJS = $(SRCS:.c=.o)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+HEADER = -I ./includes/so_long.h
+HEADER_BONUS = -I ./bonus/so_long_bonus.h
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 MLX_FLAGS = -lmlx -lX11 -lXext -lm -lz
 
 LIBFT = ./libft/libft.a
-MINILIBX = ./minilibx-linux/
+MINILIBX = ./minilibx-linux/libmlx.a
+DIR_MLX = ./minilibx-linux/
 
 all : $(NAME)
 
-$(NAME) : libft_a libmlx_a $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) -L$(MINILIBX) $(MLX_FLAGS) -o $(NAME)
+$(NAME) : $(LIBFT) $(MINILIBX) $(OBJS)
+	$(CC) $(OBJS) $(LIBFT) -g -L$(DIR_MLX) $(MLX_FLAGS) $(HEADER) -o $(NAME)
+
+bonus : $(NAME_BONUS)
+
+$(NAME_BONUS) : $(LIBFT) $(MINILIBX) $(OBJS_BONUS)
+	$(CC) $(OBJS_BONUS) $(LIBFT) -g -L$(DIR_MLX) $(MLX_FLAGS) $(HEADER_BONUS) -o $(NAME_BONUS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADER) $(HEADER_BONUS) -c $< -o $@
 
-libft_a:
-	make bonus -C ./libft/
+$(LIBFT):
+	make bonus --no-print-directory -C ./libft/
 
-libmlx_a: 
-	make -C ./minilibx-linux/
+$(MINILIBX): 
+	make --no-print-directory -C ./minilibx-linux/
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(OBJS_BONUS)
 	make clean -C ./libft/
 	make clean -C ./minilibx-linux/
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 	make fclean -C ./libft/
 	make clean -C ./minilibx-linux/
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

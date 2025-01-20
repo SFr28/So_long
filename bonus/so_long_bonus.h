@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:33:58 by sfraslin          #+#    #+#             */
-/*   Updated: 2025/01/20 11:35:53 by sfraslin         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:02:54 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
-# include "mlx.h"
-# include "libft.h"
-# include "mlx_int.h"
+# include "../includes/mlx.h"
+# include "../includes/libft.h"
+# include "../includes/mlx_int.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -39,11 +39,14 @@ typedef struct s_game
 	void	*earth;
 	void	*chara;
 	void	*exit;
+	void	*dalek;
 	void	*end;
+	void	*ko;
 	void	*mlx;
 	void	*win;
 	int		**tab;
 	int		count_c;
+	int		count_d;
 	int		x_e;
 	int		y_e;
 	int		count;
@@ -51,34 +54,33 @@ typedef struct s_game
 }	t_game;
 
 void	ft_check_path(int **tab, int x, int y);
-int		ft_map_check(t_game game, int count, int len);
+int		ft_map_check(t_game *game);
 int		ft_check_walls(int **tab, int count, int len);
-int		ft_check_items(int **tab, int count, int len);
+int		ft_check_items(t_game *game, int count_c);
 int		ft_items_valid(char i);
 int		ft_check_format(char *title);
-int		**map_to_tab(int fd, int count, int len, char *str);
-int		**ft_begin(char *title, int count, int len);
+int		**map_to_tab(int fd, t_game game, char *str);
+int		**ft_begin(char *title, t_game game);
 int		**ft_clear_tab(int **tab, int count);
 
-void	ft_create(t_game game, int count, int len);
-void	ft_draw(t_game *game);
+void	ft_create(t_game game);
+void	ft_draw(t_game *game, int count_mvt);
 void	ft_put_image(t_game *game, int x, int y);
 void	ft_exit_game(t_game *game, int keycode);
+void	ft_game_over(t_game *game, int keycode);
 int		ft_close(t_game *game);
 
-t_game	ft_check_errors(char *title, t_game game, int fd, char *str);
-t_coord	ft_p_coord(t_game game, int count, int len);
 void	ft_error(int i);
-int		ft_count_mvt(int count_mvt);
+t_game	ft_check_errors(int fd, char *str);
+t_coord	ft_p_coord(t_game game);
 int		ft_check_sprites(void);
 void	ft_stop(int count_c, int count, int fd, int **tab);
-void	ft_destroy_image(t_game *game);
 
-int		ft_move(int keycode, t_game *game);
-int		ft_up(t_game *game);
-int		ft_down(t_game *game);
-int		ft_left(t_game *game);
-int		ft_right(t_game *game);
+void	ft_move(int keycode, t_game *game);
+int		ft_up(t_game *game, int key);
+int		ft_down(t_game *game, int key);
+int		ft_left(t_game *game, int key);
+int		ft_right(t_game *game, int key);
 int		ft_path(t_game *game, int keycode);
 int		ft_count(int fd, int len);
 

@@ -10,33 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "./so_long_bonus.h"
 
-int	ft_check_items(int **tab, int count, int len)
+int	ft_check_items(t_game *game, int count_c)
 {
 	int	count_e_p;
-	int	count_c;
 	int	i;
 	int	j;
 
 	i = -1;
 	count_e_p = 0;
-	count_c = 0;
-	while (++i < count)
+	game->count_d = 0;
+	while (++i < game->count)
 	{
 		j = -1;
-		while (++j <= len - 2)
+		while (++j <= game->len - 2)
 		{
-			if (tab[i][j] == 'E' || tab[i][j] == 'P')
+			if (game->tab[i][j] == 'E' || game->tab[i][j] == 'P')
 				count_e_p++;
-			if (tab[i][j] == 'C')
+			if (game->tab[i][j] == 'C')
 				count_c++;
-			if (ft_items_valid(tab[i][j]) == 1)
+			if (game->tab[i][j] == 'D')
+				game->count_d++;
+			if (ft_items_valid(game->tab[i][j]) == 1)
 				return (0);
 		}
 	}
 	if (count_e_p != 2 || count_c == 0)
-		return (1);
+		count_c = 0;
 	return (count_c);
 }
 
@@ -67,33 +68,33 @@ int	ft_check_walls(int **tab, int count, int len)
 	return (0);
 }
 
-int	ft_map_check(t_game game, int count, int len)
+int	ft_map_check(t_game *game)
 {
 	int	x;
 	int	y;
 
 	x = 1;
 	y = 1;
-	if (ft_check_walls(game.tab, count, len) == 1)
+	if (ft_check_walls(game->tab, game->count, game->len - 1) == 1)
 		return (-1);
-	game.count_c = ft_check_items(game.tab, count, len);
-	if (game.count_c == 0)
+	game->count_c = ft_check_items(game, 0);
+	if (game->count_c == 0)
 	{
 		ft_error(-1);
 		return (-1);
 	}
-	ft_check_path(game.tab, game.map.x, game.map.y);
-	while (x < count)
+	ft_check_path(game->tab, game->map.x, game->map.y);
+	while (x < game->count)
 	{
 		y = -1;
-		while (++y <= len - 2)
+		while (++y <= game->len - 2)
 		{
-			if (game.tab[x][y] != '1')
+			if (game->tab[x][y] != '1' && game->tab[x][y] != 'D')
 				return (-2);
 		}
 		x++;
 	}
-	return (game.count_c);
+	return (game->count_c);
 }
 
 void	ft_check_path(int **tab, int x, int y)
@@ -101,13 +102,13 @@ void	ft_check_path(int **tab, int x, int y)
 	if (tab[x][y] == '1')
 		return ;
 	tab[x][y] = '1';
-	if (tab[x + 1][y] == '0' || tab[x + 1][y] > '1')
+	if (tab[x + 1][y] == '0' || (tab[x + 1][y] > '1' && tab[x + 1][y] != 'D'))
 		ft_check_path(tab, x + 1, y);
-	if (tab[x - 1][y] == '0' || tab[x - 1][y] > '1')
+	if (tab[x - 1][y] == '0' || (tab[x - 1][y] > '1' && tab[x - 1][y] != 'D'))
 		ft_check_path(tab, x - 1, y);
-	if (tab[x][y + 1] == '0' || tab[x][y + 1] > '1')
+	if (tab[x][y + 1] == '0' || (tab[x][y + 1] > '1' && tab[x][y + 1] != 'D'))
 		ft_check_path(tab, x, y + 1);
-	if (tab[x][y - 1] == '0' || tab[x][y - 1] > '1')
+	if (tab[x][y - 1] == '0' || (tab[x][y - 1] > '1' && tab[x][y - 1] != 'D'))
 		ft_check_path(tab, x, y - 1);
 }
 
