@@ -3,19 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sfraslin <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 14:45:58 by sfraslin          #+#    #+#              #
-#    Updated: 2025/01/09 12:08:08 by sfraslin         ###   ########.fr        #
+#    Updated: 2025/01/20 19:15:40 by sfraslin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 NAME_BONUS = so_long_bonus
 
-SRCS = ./srcs/start.c ./srcs/ft_map_check.c ./srcs/create.c ./srcs/move.c ./srcs/message.c ./srcs/utils.c
+SRCS = ./srcs/start.c ./srcs/ft_map_check.c ./srcs/create.c ./srcs/move.c ./srcs/errors.c ./srcs/utils.c \
+		./srcs/so_long.c ./srcs/end.c
 SRCS_BONUS = ./bonus/start_bonus.c ./bonus/ft_map_check_bonus.c ./bonus/create_bonus.c ./bonus/move_bonus.c \
-		./bonus/message_bonus.c ./bonus/utils_bonus.c
+		./bonus/errors_bonus.c ./bonus/utils_bonus.c ./bonus/end_bonus.c ./bonus/so_long_bonus.c
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 HEADER = -I ./includes/so_long.h
@@ -39,7 +40,7 @@ bonus : $(NAME_BONUS)
 $(NAME_BONUS) : $(LIBFT) $(MINILIBX) $(OBJS_BONUS)
 	$(CC) $(OBJS_BONUS) $(LIBFT) -g -L$(DIR_MLX) $(MLX_FLAGS) $(HEADER_BONUS) -o $(NAME_BONUS)
 
-%.o: %.c
+%.o: %.c $(HEADER) $(HEADER_BONUS)
 	$(CC) $(CFLAGS) $(HEADER) $(HEADER_BONUS) -c $< -o $@
 
 $(LIBFT):

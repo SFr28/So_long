@@ -6,38 +6,36 @@
 /*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:36:21 by sfraslin          #+#    #+#             */
-/*   Updated: 2025/01/20 12:02:29 by sfraslin         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:04:54 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long_bonus.h"
 
-void	ft_create(t_game game)
+void	ft_create(t_game *game)
 {
 	int	width;
 	int	height;
 
-	game.mlx = mlx_init();
-	mlx_get_screen_size(game.mlx, &width, &height);
-	if (game.len * 50 >= width || game.count * 50 >= height)
+	game->mlx = mlx_init();
+	if (game->mlx == NULL)
+		exit (0);
+	mlx_get_screen_size(game->mlx, &width, &height);
+	if (game->len * 50 >= width || game->count * 50 >= height)
 	{
 		ft_error(-5);
-		ft_close(&game);
+		ft_clear_tab(game->tab, game->count);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		exit (0);
 	}
-	game.win = mlx_new_window(game.mlx, 50 * game.len, 50 * game.count,
+	game->win = mlx_new_window(game->mlx, 50 * game->len, 50 * game->count,
 			"so_long_bonus");
-	game.back = mlx_xpm_file_to_image(game.mlx, "back.xpm", &width, &height);
-	game.walls = mlx_xpm_file_to_image(game.mlx, "walls.xpm", &width, &height);
-	game.earth = mlx_xpm_file_to_image(game.mlx, "earth.xpm", &width, &height);
-	game.chara = mlx_xpm_file_to_image(game.mlx, "chara.xpm", &width, &height);
-	game.exit = mlx_xpm_file_to_image(game.mlx, "exit.xpm", &width, &height);
-	game.dalek = mlx_xpm_file_to_image(game.mlx, "dalek.xpm", &width, &height);
-	game.end = mlx_xpm_file_to_image(game.mlx, "you_won.xpm", &width, &height);
-	game.ko = mlx_xpm_file_to_image(game.mlx, "game_over.xpm", &width, &height);
-	ft_draw(&game, 0);
-	mlx_key_hook(game.win, (int (*)())ft_move, &game);
-	mlx_hook(game.win, 17, 1L << 17, ft_close, &game);
-	mlx_loop(game.mlx);
+	ft_load_images(game, width, height);
+	ft_draw(game, 0);
+	mlx_key_hook(game->win, (int (*)())ft_handle_key, game);
+	mlx_hook(game->win, 17, 1L << 17, ft_close, game);
+	mlx_loop(game->mlx);
 }
 
 void	ft_draw(t_game *game, int count_mvt)
@@ -57,6 +55,7 @@ void	ft_draw(t_game *game, int count_mvt)
 		while (y <= game->len)
 		{
 			ft_put_image(game, x, y);
+			ft_image_bonus(game, x, y);
 			y++;
 		}
 		x++;
@@ -90,41 +89,25 @@ void	ft_put_image(t_game *game, int x, int y)
 		mlx_put_image_to_window(game->mlx, game->win,
 			game->exit, y * 50, x * 50);
 	}
+}
+
+void	ft_image_bonus(t_game *game, int x, int y)
+{
 	if (game->tab[x][y] == 'D')
 		mlx_put_image_to_window(game->mlx, game->win,
 			game->dalek, y * 50, x * 50);
+	if (game->tab[x][y] == 'B')
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->chara_back, y * 50, x * 50);
+	if (game->tab[x][y] == 'L')
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->chara_left, y * 50, x * 50);
+	if (game->tab[x][y] == 'R')
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->chara_right, y * 50, x * 50);
 }
 
-void	ft_exit_game(t_game *game, int keycode)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (x < game->count)
-	{
-		y = 0;
-		while (y <= game->len)
-		{
-			mlx_put_image_to_window(game->mlx, game->win,
-				game->back, y * 50, x * 50);
-			y++;
-		}
-		x++;
-	}	
-	if (game->len < 7 && game->count < 7)
-		mlx_put_image_to_window(game->mlx, game->win, game->end,
-			50, 0);
-	else
-		mlx_put_image_to_window(game->mlx, game->win, game->end,
-			game->len * 25 - 150, game->count * 25 - 150);
-	if (keycode == XK_Escape)
-		ft_close(game);
-	return ;
-}
-
-void	ft_move(int key, t_game *game)
+void	ft_handle_key(int key, t_game *game)
 {
 	static int	count_items;
 	static int	count_mvt;
@@ -149,4 +132,6 @@ void	ft_move(int key, t_game *game)
 	if (count_items == game->count_c)
 		if (game->map.x == game->x_e && game->map.y == game->y_e)
 			ft_exit_game(game, key);
+	if (count_items < 0)
+		ft_game_over(game, key);
 }

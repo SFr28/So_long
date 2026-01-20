@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_map_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfraslin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:54:02 by sfraslin          #+#    #+#             */
-/*   Updated: 2024/12/30 18:25:10 by sfraslin         ###   ########.fr       */
+/*   Updated: 2025/01/21 10:16:12 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_check_items(int **tab, int count, int len)
 		}
 	}
 	if (count_e_p != 2 || count_c == 0)
-		return (1);
+		return (0);
 	return (count_c);
 }
 

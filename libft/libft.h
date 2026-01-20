@@ -6,7 +6,7 @@
 /*   By: sfraslin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:34:12 by sfraslin          #+#    #+#             */
-/*   Updated: 2024/11/23 15:43:03 by sfraslin         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:35:18 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,5 @@ char	*ft_zero(char *buffer);
 void	ft_cpy(char *dest, char *src, long int n);
 void	ft_stash(char *buffer, char *stash);
 int		ft_len(char *str, int r);
-
 
 #endif

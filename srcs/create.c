@@ -6,7 +6,7 @@
 /*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:36:21 by sfraslin          #+#    #+#             */
-/*   Updated: 2025/01/20 11:56:10 by sfraslin         ###   ########.fr       */
+/*   Updated: 2025/01/28 10:09:49 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void	ft_create(t_game game, int count, int len)
 	int	height;
 
 	game.mlx = mlx_init();
+	if (game.mlx == NULL)
+		exit (0);
 	game.count = count;
 	game.len = len;
 	mlx_get_screen_size(game.mlx, &width, &height);
 	if (game.len * 50 >= width || game.count * 50 >= height)
 	{
 		ft_error(-5);
-		ft_close(&game);
+		ft_clear_tab(game.tab, game.count);
+		mlx_destroy_display(game.mlx);
+		free(game.mlx);
+		exit (0);
 	}
+	ft_load_images(&game, width, height);
 	game.win = mlx_new_window(game.mlx, 50 * (len + 1), 50 * count, "so_long");
-	game.back = mlx_xpm_file_to_image(game.mlx, "back.xpm", &width, &height);
-	game.walls = mlx_xpm_file_to_image(game.mlx, "walls.xpm", &width, &height);
-	game.earth = mlx_xpm_file_to_image(game.mlx, "earth.xpm", &width, &height);
-	game.chara = mlx_xpm_file_to_image(game.mlx, "chara.xpm", &width, &height);
-	game.exit = mlx_xpm_file_to_image(game.mlx, "exit.xpm", &width, &height);
-	game.end = mlx_xpm_file_to_image(game.mlx, "you_won.xpm", &width, &height);
 	ft_draw(&game);
 	mlx_key_hook(game.win, ft_move, &game);
 	mlx_hook(game.win, 17, 1L << 17, ft_close, &game);
@@ -82,35 +82,6 @@ void	ft_put_image(t_game *game, int x, int y)
 		mlx_put_image_to_window(game->mlx, game->win,
 			game->exit, y * 50, x * 50);
 	}
-}
-
-void	ft_exit_game(t_game *game, int keycode)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (x < game->count)
-	{
-		y = 0;
-		while (y <= game->len)
-		{
-			mlx_put_image_to_window(game->mlx, game->win,
-				game->back, y * 50, x * 50);
-			y++;
-		}
-		x++;
-	}	
-	if (game->len < 7 && game->count < 7)
-		mlx_put_image_to_window(game->mlx, game->win, game->end,
-			50, 0);
-	else
-		mlx_put_image_to_window(game->mlx, game->win, game->end,
-			game->len * 25 - 150, game->count * 25 - 150);
-	if (keycode == XK_Escape)
-		ft_close(game);
-	return ;
 }
 
 int	ft_move(int key, t_game *game)

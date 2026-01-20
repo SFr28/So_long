@@ -6,7 +6,7 @@
 /*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:33:58 by sfraslin          #+#    #+#             */
-/*   Updated: 2025/01/20 11:35:53 by sfraslin         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:56:50 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <fcntl.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
+
+# define TEST 1
 
 typedef struct s_coord
 {
@@ -61,6 +63,7 @@ int		**ft_begin(char *title, int count, int len);
 int		**ft_clear_tab(int **tab, int count);
 
 void	ft_create(t_game game, int count, int len);
+void	ft_load_images(t_game *game, int width, int height);
 void	ft_draw(t_game *game);
 void	ft_put_image(t_game *game, int x, int y);
 void	ft_exit_game(t_game *game, int keycode);
