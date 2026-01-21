@@ -6,7 +6,7 @@
 /*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:48:13 by sfraslin          #+#    #+#             */
-/*   Updated: 2025/01/28 10:08:01 by sfraslin         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:14:59 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	ft_count_mvt(int count_mvt)
 
 void	ft_load_images(t_game *game, int w, int h)
 {
-	game->back = mlx_xpm_file_to_image(game->mlx, "back.xpm", &w, &h);
-	game->walls = mlx_xpm_file_to_image(game->mlx, "walls.xpm", &w, &h);
-	game->earth = mlx_xpm_file_to_image(game->mlx, "earth.xpm", &w, &h);
-	game->chara = mlx_xpm_file_to_image(game->mlx, "chara.xpm", &w, &h);
-	game->exit = mlx_xpm_file_to_image(game->mlx, "exit.xpm", &w, &h);
-	game->end = mlx_xpm_file_to_image(game->mlx, "you_won.xpm", &w, &h);
+	game->back = mlx_xpm_file_to_image(game->mlx, "./textures/back.xpm", &w, &h);
+	game->walls = mlx_xpm_file_to_image(game->mlx, "./textures/walls.xpm", &w, &h);
+	game->earth = mlx_xpm_file_to_image(game->mlx, "./textures/earth.xpm", &w, &h);
+	game->chara = mlx_xpm_file_to_image(game->mlx, "./textures/chara.xpm", &w, &h);
+	game->exit = mlx_xpm_file_to_image(game->mlx, "./textures/exit.xpm", &w, &h);
+	game->end = mlx_xpm_file_to_image(game->mlx, "./textures/you_won.xpm", &w, &h);
 	if (game->back == NULL || game->walls == NULL || game->earth == NULL
 		|| game->chara == NULL || game->exit == NULL || game->end == NULL)
 	{

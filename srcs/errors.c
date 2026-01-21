@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message.c                                          :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:15:50 by sfraslin          #+#    #+#             */
-/*   Updated: 2025/01/20 19:14:39 by sfraslin         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:14:38 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ int	ft_check_sprites(void)
 	int		i;
 	int		fd;
 
-	str[0] = "back.xpm";
-	str[1] = "walls.xpm";
-	str[2] = "earth.xpm";
-	str[3] = "chara.xpm";
-	str[4] = "exit.xpm";
-	str[5] = "you_won.xpm";
+	str[0] = "./textures/back.xpm";
+	str[1] = "./textures/walls.xpm";
+	str[2] = "./textures/earth.xpm";
+	str[3] = "./textures/chara.xpm";
+	str[4] = "./textures/exit.xpm";
+	str[5] = "./textures/you_won.xpm";
 	i = 0;
 	while (i < 6)
 	{
