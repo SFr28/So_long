@@ -1,5 +1,9 @@
 # So_long – École 42
 
+<p align="center">
+   <img width="746" height="349" alt="image" src="https://github.com/user-attachments/assets/2a14458a-a70f-4642-8bb1-e9b7d5cc4fac" />
+</p>
+
 ## Description
 So_long est un projet de l'École 42 consistant à créer un jeu 2D simple en C avec la bibliothèque **MiniLibX**. Le joueur doit collecter des objets sur une carte pour débloquer la sortie.
 
