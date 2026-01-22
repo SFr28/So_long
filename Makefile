@@ -6,7 +6,7 @@
 #    By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 14:45:58 by sfraslin          #+#    #+#              #
-#    Updated: 2026/01/21 12:11:24 by sfraslin         ###   ########.fr        #
+#    Updated: 2026/01/22 11:40:52 by sfraslin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ $(MINILIBX):
 	make --no-print-directory -C ./minilibx-linux/
 
 clean:
-	rm -rf $(OBJS_DIR)
+	rm -rf $(OBJS_DIR) $(OBJS_BONUS_DIR)
 	make clean -C ./libft/
 	make clean -C ./minilibx-linux/
 

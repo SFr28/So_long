@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message_bonus.c                                    :+:      :+:    :+:   */
+/*   errors_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfraslin <sfraslin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:15:50 by sfraslin          #+#    #+#             */
-/*   Updated: 2025/01/20 15:36:12 by sfraslin         ###   ########.fr       */
+/*   Updated: 2026/01/22 11:34:53 by sfraslin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,17 @@ int	ft_check_sprites(void)
 	int		i;
 	int		fd;
 
-	str[0] = "back.xpm";
-	str[1] = "walls.xpm";
-	str[2] = "earth.xpm";
-	str[3] = "chara.xpm";
-	str[4] = "exit.xpm";
-	str[5] = "you_won.xpm";
-	str[6] = "dalek.xpm";
-	str[7] = "game_over.xpm";
-	str[8] = "chara_back.xpm";
-	str[9] = "chara_left.xpm";
-	str[10] = "chara_right.xpm";
+	str[0] = "./textures/back.xpm";
+	str[1] = "./textures/walls.xpm";
+	str[2] = "./textures/earth.xpm";
+	str[3] = "./textures/chara.xpm";
+	str[4] = "./textures/exit.xpm";
+	str[5] = "./textures/you_won.xpm";
+	str[6] = "./textures/dalek.xpm";
+	str[7] = "./textures/game_over.xpm";
+	str[8] = "./textures/chara_back.xpm";
+	str[9] = "./textures/chara_left.xpm";
+	str[10] = "./textures/chara_right.xpm";
 	i = 0;
 	while (i < 11)
 	{
